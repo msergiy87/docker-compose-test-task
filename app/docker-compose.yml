@@ -1,0 +1,29 @@
+version: "2"
+services:
+
+  nginx:
+    image: nginx
+    ports:
+        - "80:80"
+    volumes:
+        - ./html/site-nginx/index.html:/usr/share/nginx/html/index.html
+  apache:
+    image: httpd
+    ports:
+        - "8080:80"
+    volumes:
+        - ./html/site-apache/index.html:/usr/local/apache2/htdocs/index.html
+
+  db:
+    image: mariadb
+    restart: always
+    ports:
+        - "4000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+       - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+    driver: local
